@@ -17,12 +17,7 @@ document.getElementById('decryptBtn').addEventListener('click', async () => {
 const IV_LENGTH = 16; // For AES, this is always 16
 const LOCAL_STORAGE_KEY = 'secureEncryptionKey';
 const MASTER_KEY = 'masterPassword1234'; 
-                                             // MASTER_KEY is not used directly for encryption. 
-                                            // It serves as a passphrase to derive a secure encryption key 
-                                            // using PBKDF2 before any actual data encryption occurs.
 
-// Helper function to convert array to hex string
-// Random intialisation vector generated as 8 bit int and is getting stored as hex generated as pair of 2 and 0 if masking needed.
 function arrayBufferToHex(buffer) {
     return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
@@ -36,16 +31,16 @@ function hexToArrayBuffer(hex) {
 //-----------------------------------------------------------------------------------------
 
 // Encrypt data using a passphrase
-async function encryptWithPassphrase(data, passphrase){     // Take data and master key
+async function encryptWithPassphrase(data, passphrase){ 
     let passphraseKey = await crypto.subtle.importKey(
         'raw',
         new TextEncoder().encode(passphrase),
         { name: 'PBKDF2' },         // formatting to PBKDF2 (Password-Based Key Derivation Function 2) so that it can be supported by
-        false,                          // web crypto API
+        false,                       
         ['deriveKey']
     );
     let salt = crypto.getRandomValues(new Uint8Array(16));      // Salting
-    let keyMaterial = await crypto.subtle.deriveKey(        // Using master key to generate another encryption key from web crypto api.
+    let keyMaterial = await crypto.subtle.deriveKey(      
         {
             name: 'PBKDF2',
             salt: salt,
@@ -69,7 +64,7 @@ async function encryptWithPassphrase(data, passphrase){     // Take data and mas
 // Decrypt data using a passphrase
 async function decryptWithPassphrase(encryptedData, iv, salt, passphrase) {
     let passphraseKey = await crypto.subtle.importKey(      // Import data from local storage and web crypto.
-        'raw',                                              // [Initialisaion vector][salt][enc. key]
+        'raw',                                          
         new TextEncoder().encode(passphrase),
         { name: 'PBKDF2' },
         false,
