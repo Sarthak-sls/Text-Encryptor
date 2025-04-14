@@ -35,10 +35,10 @@ h1 {
 label {
     display: block;
     margin-bottom: 5px;
-    color: #000000; /* Text color */
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* Text shadow */
-    backdrop-filter: blur(1.5px); /* Blur the background behind the label */
-    background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white background for readability */
+    color: #000000;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1.5px); 
+    background-color: rgba(255, 255, 255, 0.3);
     padding: 5px; /* Add padding for spacing */
 }
 
@@ -49,7 +49,7 @@ input[type="text"], textarea {
     border-radius: 4px;
     box-sizing: border-box;
     color: #fff; /* Text color */
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for input fields */
+    background-color: rgba(255, 255, 255, 0.8); 
     color : #000000;
 }
 
